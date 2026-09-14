@@ -1,7 +1,6 @@
 import {
   Search,
   Bell,
-  User,
   ArrowRight,
   Triangle,
   Star,
@@ -9,10 +8,11 @@ import {
   Clock,
   BookOpen,
 } from "lucide-react";
+import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
 
 export default function VertexHomePage() {
   return (
-    <main className="min-h-screen bg-[var(--background)] font-display">
+    <main className="min-h-screen bg-[var(--background)] font-sans">
       {/* Header */}
       <header className="mx-auto max-w-6xl px-6 pt-8 pb-6 flex items-center justify-between">
         <a href="#" className="flex items-center gap-2.5">
@@ -23,7 +23,7 @@ export default function VertexHomePage() {
             Vertex
           </span>
         </a>
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--neutral-700)]">
+        <nav className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 text-sm font-medium text-[var(--neutral-700)]">
           <a href="#" className="hover:text-[var(--primary)] transition">Courses</a>
           <a href="#" className="hover:text-[var(--primary)] transition">My Learning</a>
         </nav>
@@ -31,12 +31,17 @@ export default function VertexHomePage() {
           <a href="#" aria-label="Notifications" className="hidden sm:inline-flex w-9 h-9 rounded-full bg-[var(--neutral-100)] hover:bg-[var(--neutral-200)] items-center justify-center text-[var(--neutral-700)] transition">
             <Bell size={18} />
           </a>
-          <a href="#" aria-label="Account" className="hidden sm:inline-flex w-9 h-9 rounded-full bg-[var(--neutral-100)] hover:bg-[var(--neutral-200)] items-center justify-center text-[var(--neutral-700)] transition">
-            <User size={18} />
-          </a>
-          <a href="#" className="inline-flex items-center gap-2 rounded-full bg-[var(--primary)] text-white px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-[var(--primary-dark)] transition">
-            Get Started
-          </a>
+          <Show when="signed-out">
+            <SignInButton mode="modal">
+              <button className="hidden sm:inline-flex w-9 h-9 rounded-full bg-[var(--neutral-100)] hover:bg-[var(--neutral-200)] items-center justify-center text-[var(--neutral-700)] transition text-xs font-medium" aria-label="Sign In">Sign In</button>
+            </SignInButton>
+            <SignUpButton mode="modal">
+              <button className="inline-flex items-center gap-2 rounded-full bg-[var(--primary)] text-white px-5 py-2.5 text-sm font-semibold shadow-sm hover:bg-[var(--primary-dark)] transition">Get Started</button>
+            </SignUpButton>
+          </Show>
+          <Show when="signed-in">
+            <UserButton />
+          </Show>
         </div>
       </header>
 
